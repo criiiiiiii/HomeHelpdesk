@@ -30,3 +30,6 @@ Overall - pretty easy to get up and running if you follow the below steps:
 4. Create the Data File
    echo '{"active":[],"completed":[],"deleted":[]}' > tickets.json
 
+5. app.py
+Path: ~/household-helpdesk/app.py
+Contents (replace placeholders with your real SMTP settings):
