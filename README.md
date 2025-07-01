@@ -33,3 +33,46 @@ Overall - pretty easy to get up and running if you follow the below steps:
 5. app.py
 Path: ~/household-helpdesk/app.py
 Contents (replace placeholders with your real SMTP settings):
+
+6. Templates
+  templates/create.html
+  templates/edit.html
+  templates/index.html
+  templates/dashboard.html
+  
+7. Favicon
+  Create static/ and add your icon:
+  mkdir -p ~/household-helpdesk/static
+  # Copy your favicon.ico into that folder:
+  # scp ~/Downloads/favicon.ico admin@<your-pi-ip>:/home/admin/household-helpdesk/static/favicon.ico
+
+8. systemd Service
+  Path: /etc/systemd/system/household-helpdesk.service
+  [Unit]
+  Description=Home Helpdesk Flask App
+  After=network.target
+
+  [Service]
+  User=admin
+  WorkingDirectory=/home/admin/household-helpdesk
+  ExecStart=/home/admin/flaskenv/bin/python /home/admin/household-helpdesk/app.py
+  Restart=always
+
+ [Install]
+ WantedBy=multi-user.target
+
+  Enable & start:
+  sudo systemctl daemon-reload
+  sudo systemctl enable household-helpdesk.service
+  sudo systemctl start household-helpdesk.service
+
+9. Test & Access
+  Create ticket: http://<your-pi-ip>:5080/create
+
+  View tickets: http://<your-pi-ip>:5080/
+
+  Dashboard: http://<your-pi-ip>:5080/dashboard
+
+
+
+10. 
