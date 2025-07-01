@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Helpdesk</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+  <h1>Home Helpdesk</h1>
+  <a href="/create" class="btn btn-success mb-3">Create New Task</a>
+  <a href="/dashboard" class="btn btn-primary mb-3">Dashboard</a>
+
+  {% for title, tickets in [("Active Tasks", active), ("Completed Tasks", completed), ("Deleted Tasks", deleted)] %}
+    <h3 class="mt-4">{{ title }}</h3>
+    {% if tickets %}
+      <div class="table-responsive {% raw %}{% if title=='Deleted Tasks'%}opacity-50{% endif %}{% endraw %}">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Description</th><th>Priority</th>
+              <th>Created</th><th>Updated</th><th>Closed</th>
+              <th>Duration (days)</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% raw %}{% for ticket in tickets %}{% endraw %}
+            <tr>
+              <td>{{ ticket.id }}</td>
+              <td>{{ ticket.name }}</td>
+              <td>{{ ticket.description }}</td>
+              <td>{{ "🔥"*ticket.priority }}</td>
+              <td>{{ ticket.created }}</td>
+              <td>{{ ticket.updated }}</td>
+              <td>{{ ticket.closed }}</td>
+              <td>{{ ticket|duration }}</td>
+              <td class="text-nowrap">
+                <div class="btn-group" role="group">
+                  {% raw %}{% if title=="Active Tasks" %}{% endraw %}
+                  <form action="/complete/{{ticket.id}}" method="POST" class="m-0 p-0">
+                    <button class="btn btn-success btn-sm">Complete</button>
+                  </form>
+                  {% raw %}{% endif %}{% endraw %}
+                  <a href="/edit/{{ticket.id}}" class="btn btn-warning btn-sm">Edit</a>
+                  {% raw %}{% if title!="Deleted Tasks" %}{% endraw %}
+                  <form action="/delete/{{ticket.id}}" method="POST" class="m-0 p-0">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                  {% raw %}{% endif %}{% endraw %}
+                </div>
+              </td>
+            </tr>
+            {% raw %}{% endfor %}{% endraw %}
+          </tbody>
+        </table>
+      </div>
+    {% raw %}{% else %}{% endraw %}
+      <p>No tasks in this section.</p>
+    {% raw %}{% endif %}{% endraw %}
+  {% raw %}{% endfor %}{% endraw %}
+</body>
+</html>
