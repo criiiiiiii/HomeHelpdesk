@@ -23,16 +23,9 @@ Overall - pretty easy to get up and running if you follow the below steps:
   pip install flask
 
 3. Project Structure
-   ~/household-helpdesk/
-  ├── app.py
-  ├── tickets.json
-  ├── templates/
-  │   ├── create.html
-  │   ├── edit.html
-  │   ├── index.html
-  │   └── dashboard.html
-  └── static/
-      └── favicon.ico
+   
+  <img width="403" alt="Screenshot 2025-07-01 at 10 55 08 AM" src="https://github.com/user-attachments/assets/e04721d7-112b-4d53-aafb-20ee15b8461b" />
+
 
 4. Create the Data File
    echo '{"active":[],"completed":[],"deleted":[]}' > tickets.json
